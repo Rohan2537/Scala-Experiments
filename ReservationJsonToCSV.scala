@@ -16,12 +16,13 @@ import scala.collection.mutable.ListBuffer
 
 case class Reservations(Instances: List[Instances])
 case class Instances(
+                      InstanceId: String,
                       PublicDnsName: String,
-                      EbsOptimized: Boolean,
-                      LaunchTime: String,
                       ProductCodes: List[String],
+                      Tags: List[Map[String, String]],
                       State: StateClass
                     )
+
 case class StateClass(Code: Int, Name: String)
 
 object ReservationJsonToCSV extends App{
@@ -29,7 +30,7 @@ object ReservationJsonToCSV extends App{
   implicit val formats = DefaultFormats
 
   val jsonString = Source.fromFile("C:/Scala/Scala exercise/reservation.json").mkString
- println(jsonString)
+ //println(jsonString)
 
   val json = JsonParser.parse(jsonString)//parse(jsonString)
   val elements = (json \\ "Reservations").children
